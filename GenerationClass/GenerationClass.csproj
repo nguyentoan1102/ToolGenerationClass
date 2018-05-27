@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E5C8F60C-40CD-4AE3-A8BA-8B835D2ED394}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GenerationClass</RootNamespace>
+    <AssemblyName>GenerationClass</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SqlEnum.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.2.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="system.data.oracleclient, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\system.data.oracleclient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChangeColumnTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeColumnTable.Designer.cs">
+      <DependentUpon>ChangeColumnTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\ClassCodeBLL.cs" />
+    <Compile Include="Code\ClassCodeContract.cs" />
+    <Compile Include="Code\ClassCodeDataAccess.cs" />
+    <Compile Include="Code\ClassCodeService.cs" />
+    <Compile Include="Code\ClassHelperMethod.cs" />
+    <Compile Include="Code\ClassSeviceAPI.cs" />
+    <Compile Include="Code\ClassStoreProceduce.cs" />
+    <Compile Include="Code\ConnectionData.cs" />
+    <Compile Include="Code\DataRetrieve.cs" />
+    <Compile Include="Code\DBInstance.cs" />
+    <Compile Include="Code\Entity.cs" />
+    <Compile Include="Code\File.cs" />
+    <Compile Include="Code\Generation.cs" />
+    <Compile Include="Code\GenerationSLQ.cs" />
+    <Compile Include="Code\GenrationComment.cs" />
+    <Compile Include="Code\Globals.cs" />
+    <Compile Include="Code\test.cs" />
+    <Compile Include="ConnectData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConnectData.Designer.cs">
+      <DependentUpon>ConnectData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generation.Designer.cs">
+      <DependentUpon>Generation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListTableEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListTableEdit.Designer.cs">
+      <DependentUpon>ListTableEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process.Designer.cs">
+      <DependentUpon>Process.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="test.cs" />
+    <EmbeddedResource Include="ChangeColumnTable.resx">
+      <DependentUpon>ChangeColumnTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectData.resx">
+      <DependentUpon>ConnectData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generation.resx">
+      <DependentUpon>Generation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListTableEdit.resx">
+      <DependentUpon>ListTableEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process.resx">
+      <DependentUpon>Process.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DLL\MySql.Data.dll" />
+    <Content Include="DLL\system.data.oracleclient.dll" />
+    <Content Include="Images\About.png" />
+    <Content Include="Images\Connect.png" />
+    <Content Include="Images\Custom.png" />
+    <Content Include="Images\db-add.png" />
+    <Content Include="Images\Exit.png" />
+    <Content Include="Images\Find.png" />
+    <Content Include="Images\Generate.png" />
+    <Content Include="Images\GNR8.ico" />
+    <Content Include="Images\GNR8.jpg" />
+    <Content Include="Images\lock.png" />
+    <Content Include="Images\Refresh.png" />
+    <Content Include="Images\Status.gif" />
+    <Content Include="Images\Tokens.png" />
+    <None Include="Resources\RocketDock.png" />
+    <None Include="Resources\Refresh.png" />
+    <None Include="Resources\Notepad.png" />
+    <None Include="Resources\no-image.jpg" />
+    <None Include="Resources\menu_10.png" />
+    <None Include="Resources\mainch.jpg" />
+    <None Include="Resources\logothanhsoft-01.png" />
+    <None Include="Resources\lock.jpg" />
+    <None Include="Resources\loading.gif" />
+    <None Include="Resources\icon-32-xml.png" />
+    <None Include="Resources\icon-32-word.png" />
+    <None Include="Resources\icon-32-upload.png" />
+    <None Include="Resources\icon-32-unpublish.png" />
+    <None Include="Resources\icon-32-unarchive.png" />
+    <None Include="Resources\icon-32-trash2.png" />
+    <None Include="Resources\icon-32-trash1.png" />
+    <None Include="Resources\icon-32-trash.png" />
+    <None Include="Resources\icon-32-transport.png" />
+    <None Include="Resources\icon-32-task.png" />
+    <None Include="Resources\icon-32-shift.png" />
+    <None Include="Resources\icon-32-service-return.png" />
+    <None Include="Resources\icon-32-service.png" />
+    <None Include="Resources\icon-32-send.png" />
+    <None Include="Resources\icon-32-search.png" />
+    <None Include="Resources\icon-32-save.png" />
+    <None Include="Resources\icon-32-rooms.png" />
+    <None Include="Resources\icon-32-revert.png" />
+    <None Include="Resources\icon-32-refresh.png" />
+    <None Include="Resources\icon-32-publish.png" />
+    <None Include="Resources\icon-32-print.png" />
+    <None Include="Resources\icon-32-preview.png" />
+    <None Include="Resources\icon-32-pdf.png" />
+    <None Include="Resources\icon-32-payment.png" />
+    <None Include="Resources\icon-32-notapply.png" />
+    <None Include="Resources\icon-32-new-customers.png" />
+    <None Include="Resources\icon-32-new.png" />
+    <None Include="Resources\icon-32-move.png" />
+    <None Include="Resources\icon-32-menu.png" />
+    <None Include="Resources\icon-32-login.png" />
+    <None Include="Resources\icon-32-lock.png" />
+    <None Include="Resources\icon-32-insurance.png" />
+    <None Include="Resources\icon-32-html.png" />
+    <None Include="Resources\icon-32-holiday.png" />
+    <None Include="Resources\icon-32-help.png" />
+    <None Include="Resources\icon-32-group.png" />
+    <None Include="Resources\icon-32-forward.png" />
+    <None Include="Resources\icon-32-facility.png" />
+    <None Include="Resources\icon-32-export.png" />
+    <None Include="Resources\icon-32-excel.png" />
+    <None Include="Resources\icon-32-edit.png" />
+    <None Include="Resources\icon-32-download.png" />
+    <None Include="Resources\icon-32-deposit.png" />
+    <None Include="Resources\icon-32-default.png" />
+    <None Include="Resources\icon-32-dbrestore.png" />
+    <None Include="Resources\icon-32-dbbackup.png" />
+    <None Include="Resources\icon-32-css.png" />
+    <None Include="Resources\icon-32-copy.png" />
+    <None Include="Resources\icon-32-config.png" />
+    <None Include="Resources\icon-32-car_.png" />
+    <None Include="Resources\icon-32-car.png" />
+    <None Include="Resources\icon-32-cancel.png" />
+    <None Include="Resources\icon-32-back.png" />
+    <None Include="Resources\icon-32-archive.png" />
+    <None Include="Resources\icon-32-apply.png" />
+    <None Include="Resources\icon-32-adduser1.png" />
+    <None Include="Resources\icon-32-adduser.png" />
+    <None Include="Resources\icon-16-user1.png" />
+    <None Include="Resources\icon-16-user.png" />
+    <None Include="Resources\icon-16-trash.png" />
+    <None Include="Resources\icon-16-themes.png" />
+    <None Include="Resources\icon-16-task.png" />
+    <None Include="Resources\icon-16-stop.png" />
+    <None Include="Resources\icon-16-stats.png" />
+    <None Include="Resources\icon-16-static.png" />
+    <None Include="Resources\icon-16-shift.png" />
+    <None Include="Resources\icon-16-section.png" />
+    <None Include="Resources\icon-16-ready.png" />
+    <None Include="Resources\icon-16-project.png" />
+    <None Include="Resources\icon-16-print.png" />
+    <None Include="Resources\icon-16-plugin.png" />
+    <None Include="Resources\icon-16-play.png" />
+    <None Include="Resources\icon-16-pause.png" />
+    <None Include="Resources\icon-16-module.png" />
+    <None Include="Resources\icon-16-messages.png" />
+    <None Include="Resources\icon-16-menumgr.png" />
+    <None Include="Resources\icon-16-menu.png" />
+    <None Include="Resources\icon-16-media.png" />
+    <None Include="Resources\icon-16-massmail.png" />
+    <None Include="Resources\icon-16-logout.png" />
+    <None Include="Resources\icon-16-language.png" />
+    <None Include="Resources\icon-16-insurance.png" />
+    <None Include="Resources\icon-16-install.png" />
+    <None Include="Resources\icon-16-info.png" />
+    <None Include="Resources\icon-16-holiday.png" />
+    <None Include="Resources\icon-16-help.png" />
+    <None Include="Resources\icon-16-frontpage.png" />
+    <None Include="Resources\icon-16-finish.png" />
+    <None Include="Resources\icon-16-equipment.png" />
+    <None Include="Resources\icon-16-download.png" />
+    <None Include="Resources\icon-16-default.png" />
+    <None Include="Resources\icon-16-customer.png" />
+    <None Include="Resources\icon-16-cpanel.png" />
+    <None Include="Resources\icon-16-contract.png" />
+    <None Include="Resources\icon-16-contact.png" />
+    <None Include="Resources\icon-16-config.png" />
+    <None Include="Resources\icon-16-component.png" />
+    <None Include="Resources\icon-16-checkout.png" />
+    <None Include="Resources\icon-16-checkin.png" />
+    <None Include="Resources\icon-16-category.png" />
+    <None Include="Resources\icon-16-car_.png" />
+    <None Include="Resources\icon-16-car.png" />
+    <None Include="Resources\icon-16-attachment.png" />
+    <None Include="Resources\icon-16-article.png" />
+    <None Include="Resources\icon-16-archive.png" />
+    <None Include="Resources\icon-16-address.png" />
+    <None Include="Resources\icon.ico" />
+    <None Include="Resources\Home.png" />
+    <None Include="Resources\food.png" />
+    <None Include="Resources\Doc.png" />
+    <None Include="Resources\Close.png" />
+    <None Include="Resources\Buddy-Green.png" />
+    <None Include="Resources\Apps.png" />
+    <None Include="Resources\apple.png" />
+    <None Include="Resources\apple.ico" />
+    <None Include="Resources\app_cover copy.jpg" />
+    <None Include="Resources\Address-Book.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
