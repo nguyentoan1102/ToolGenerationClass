@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Generation));
             this.chkSelectAll = new System.Windows.Forms.CheckBox();
             this.lstObjects = new System.Windows.Forms.CheckedListBox();
             this.btnProcess = new System.Windows.Forms.Button();
@@ -53,7 +54,7 @@
             this.chkSelectAll.Enabled = false;
             this.chkSelectAll.Location = new System.Drawing.Point(12, 284);
             this.chkSelectAll.Name = "chkSelectAll";
-            this.chkSelectAll.Size = new System.Drawing.Size(82, 17);
+            this.chkSelectAll.Size = new System.Drawing.Size(102, 21);
             this.chkSelectAll.TabIndex = 6;
             this.chkSelectAll.Text = "Chọn tất cả";
             this.ttPrimary.SetToolTip(this.chkSelectAll, "Select/Deselect all listed objects");
@@ -66,7 +67,7 @@
             this.lstObjects.FormattingEnabled = true;
             this.lstObjects.Location = new System.Drawing.Point(2, 12);
             this.lstObjects.Name = "lstObjects";
-            this.lstObjects.Size = new System.Drawing.Size(436, 260);
+            this.lstObjects.Size = new System.Drawing.Size(436, 251);
             this.lstObjects.Sorted = true;
             this.lstObjects.TabIndex = 5;
             this.lstObjects.ThreeDCheckBoxes = true;
@@ -104,7 +105,7 @@
             // 
             this.txtNamespace.Location = new System.Drawing.Point(252, 283);
             this.txtNamespace.Name = "txtNamespace";
-            this.txtNamespace.Size = new System.Drawing.Size(186, 21);
+            this.txtNamespace.Size = new System.Drawing.Size(186, 24);
             this.txtNamespace.TabIndex = 24;
             // 
             // label7
@@ -112,7 +113,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(177, 286);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(69, 13);
+            this.label7.Size = new System.Drawing.Size(87, 17);
             this.label7.TabIndex = 23;
             this.label7.Text = "Namespace :";
             // 
@@ -178,7 +179,7 @@
             // 
             // Generation
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(446, 430);
             this.Controls.Add(this.progressBar1);
@@ -190,6 +191,7 @@
             this.Controls.Add(this.btnProcess);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Generation";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

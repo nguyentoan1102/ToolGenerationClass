@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectData));
             this.txtPWD = new System.Windows.Forms.TextBox();
             this.txtUID = new System.Windows.Forms.TextBox();
             this.cboDB = new System.Windows.Forms.ComboBox();
@@ -50,36 +51,40 @@
             // txtPWD
             // 
             this.txtPWD.Font = new System.Drawing.Font("Wingdings", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.txtPWD.Location = new System.Drawing.Point(144, 121);
+            this.txtPWD.Location = new System.Drawing.Point(192, 149);
+            this.txtPWD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPWD.Name = "txtPWD";
             this.txtPWD.PasswordChar = 'l';
-            this.txtPWD.Size = new System.Drawing.Size(148, 20);
+            this.txtPWD.Size = new System.Drawing.Size(196, 23);
             this.txtPWD.TabIndex = 2;
             this.txtPWD.Text = "abc123@!";
             // 
             // txtUID
             // 
-            this.txtUID.Location = new System.Drawing.Point(144, 95);
+            this.txtUID.Location = new System.Drawing.Point(192, 117);
+            this.txtUID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtUID.Name = "txtUID";
-            this.txtUID.Size = new System.Drawing.Size(148, 20);
+            this.txtUID.Size = new System.Drawing.Size(196, 22);
             this.txtUID.TabIndex = 1;
             this.txtUID.Text = "sa";
             // 
             // cboDB
             // 
             this.cboDB.FormattingEnabled = true;
-            this.cboDB.Location = new System.Drawing.Point(107, 184);
+            this.cboDB.Location = new System.Drawing.Point(143, 226);
+            this.cboDB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cboDB.Name = "cboDB";
-            this.cboDB.Size = new System.Drawing.Size(185, 21);
+            this.cboDB.Size = new System.Drawing.Size(245, 24);
             this.cboDB.TabIndex = 3;
             this.cboDB.SelectedIndexChanged += new System.EventHandler(this.cboDB_SelectedIndexChanged);
             // 
             // butOk
             // 
             this.butOk.Enabled = false;
-            this.butOk.Location = new System.Drawing.Point(323, 259);
+            this.butOk.Location = new System.Drawing.Point(431, 319);
+            this.butOk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.butOk.Name = "butOk";
-            this.butOk.Size = new System.Drawing.Size(75, 23);
+            this.butOk.Size = new System.Drawing.Size(100, 28);
             this.butOk.TabIndex = 14;
             this.butOk.Text = "Ok";
             this.butOk.UseVisualStyleBackColor = true;
@@ -87,9 +92,10 @@
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(15, 54);
+            this.label6.Location = new System.Drawing.Point(20, 66);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(86, 23);
+            this.label6.Size = new System.Drawing.Size(115, 28);
             this.label6.TabIndex = 13;
             this.label6.Text = "Authentication:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -97,9 +103,10 @@
             // butCancel
             // 
             this.butCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.butCancel.Location = new System.Drawing.Point(404, 259);
+            this.butCancel.Location = new System.Drawing.Point(539, 319);
+            this.butCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.butCancel.Name = "butCancel";
-            this.butCancel.Size = new System.Drawing.Size(75, 23);
+            this.butCancel.Size = new System.Drawing.Size(100, 28);
             this.butCancel.TabIndex = 15;
             this.butCancel.Text = "Cancel";
             this.butCancel.UseVisualStyleBackColor = true;
@@ -112,9 +119,10 @@
             this.cboAuthentication.Items.AddRange(new object[] {
             "SQL Server Authentication",
             "Windows Authentication"});
-            this.cboAuthentication.Location = new System.Drawing.Point(107, 57);
+            this.cboAuthentication.Location = new System.Drawing.Point(143, 70);
+            this.cboAuthentication.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cboAuthentication.Name = "cboAuthentication";
-            this.cboAuthentication.Size = new System.Drawing.Size(185, 21);
+            this.cboAuthentication.Size = new System.Drawing.Size(245, 24);
             this.cboAuthentication.TabIndex = 12;
             this.cboAuthentication.SelectedIndexChanged += new System.EventHandler(this.cboAuthentication_SelectedIndexChanged);
             // 
@@ -131,17 +139,20 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(179, 12);
+            this.groupBox1.Location = new System.Drawing.Point(239, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(306, 236);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(408, 290);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             // 
             // btnTestConnection
             // 
-            this.btnTestConnection.Location = new System.Drawing.Point(187, 153);
+            this.btnTestConnection.Location = new System.Drawing.Point(249, 188);
+            this.btnTestConnection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnTestConnection.Name = "btnTestConnection";
-            this.btnTestConnection.Size = new System.Drawing.Size(105, 23);
+            this.btnTestConnection.Size = new System.Drawing.Size(140, 28);
             this.btnTestConnection.TabIndex = 16;
             this.btnTestConnection.Text = "Kết nối";
             this.btnTestConnection.UseVisualStyleBackColor = true;
@@ -149,44 +160,49 @@
             // 
             // txtServer
             // 
-            this.txtServer.Location = new System.Drawing.Point(107, 27);
+            this.txtServer.Location = new System.Drawing.Point(143, 33);
+            this.txtServer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtServer.Name = "txtServer";
-            this.txtServer.Size = new System.Drawing.Size(185, 20);
+            this.txtServer.Size = new System.Drawing.Size(245, 22);
             this.txtServer.TabIndex = 0;
             this.txtServer.Text = ".";
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(15, 118);
+            this.label4.Location = new System.Drawing.Point(20, 145);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(86, 23);
+            this.label4.Size = new System.Drawing.Size(115, 28);
             this.label4.TabIndex = 11;
             this.label4.Text = "Password:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(15, 92);
+            this.label3.Location = new System.Drawing.Point(20, 113);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(86, 23);
+            this.label3.Size = new System.Drawing.Size(115, 28);
             this.label3.TabIndex = 10;
             this.label3.Text = "User Name:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(15, 185);
+            this.label2.Location = new System.Drawing.Point(20, 228);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 23);
+            this.label2.Size = new System.Drawing.Size(115, 28);
             this.label2.TabIndex = 9;
             this.label2.Text = "Database:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(15, 26);
+            this.label1.Location = new System.Drawing.Point(20, 32);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 23);
+            this.label1.Size = new System.Drawing.Size(115, 28);
             this.label1.TabIndex = 8;
             this.label1.Text = "Server:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -197,23 +213,26 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox1.Image = global::GenerationClass.Resource1.Buddy_Green;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(16, 15);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(161, 240);
+            this.pictureBox1.Size = new System.Drawing.Size(214, 295);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             // 
             // ConnectData
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 308);
+            this.ClientSize = new System.Drawing.Size(663, 379);
             this.Controls.Add(this.butOk);
             this.Controls.Add(this.butCancel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConnectData";

@@ -214,7 +214,7 @@ namespace GenerationClass.Code
 
                 connection.Open();
 
-                string mySelectQuery = "SELECT col.COLUMN_NAME, col.Data_type, col.CHARACTER_OCTET_LENGTH";
+                string mySelectQuery = "SELECT col.COLUMN_NAME, col.Data_type, col.CHARACTER_OCTET_LENGTH,col.IS_NULLABLE";
                 mySelectQuery += " FROM INFORMATION_SCHEMA.COLUMNS col";
                 mySelectQuery += " WHERE col.TABLE_NAME = '" + tableName + "'";
                 var myCommand = new SqlCommand(mySelectQuery, connection);
@@ -229,7 +229,8 @@ namespace GenerationClass.Code
                         {
                             Field = myReader.GetValue(0),
                             Type = myReader.GetValue(1),
-                            Length = myReader.GetValue(2)
+                            Length = myReader.GetValue(2),
+                            IsNullAble = myReader.GetValue(3)
                         };
 
                         entityList.Add(entity);

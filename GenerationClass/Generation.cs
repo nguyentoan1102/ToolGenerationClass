@@ -238,6 +238,7 @@ namespace GenerationClass
             List<GetType> entityType;
             string apiCode = "";
             string bllCode = "";
+            string getDataRow = "";
             string contractCode = "";
             string dataAceeCode = "";
             string serviceCode = "";
@@ -268,10 +269,12 @@ namespace GenerationClass
                     bllCode = Code.Generation.GenerateCodeBLL(entity, entityType, GetNameSpace(), GetClassModifiers(), lstObjects.Items[item].ToString());
                     dataAceeCode = Code.Generation.GenerateCodeDataAccess(entity, entityType, GetNameSpace(), GetClassModifiers(), lstObjects.Items[item].ToString());
                     procedueCode = Code.Generation.GenerateStoreProceduce(entity, entityType, GetNameSpace(), GetClassModifiers(), lstObjects.Items[item].ToString());
+                    getDataRow = Code.Generation.GeneralMethodGetObjectFromDataRow(entity, entityType, GetNameSpace(), GetClassModifiers(), lstObjects.Items[item].ToString());
 
                     f.Save(lstObjects.Items[item].ToString() + "Public", sPath, "Public", apiCode, "cs");
                     f.Save(lstObjects.Items[item].ToString() + "BUS", sPath, "BUS", bllCode, "cs");
                     f.Save(lstObjects.Items[item].ToString() + "DAL", sPath, "DAL", dataAceeCode, "cs");
+                    f.Save(lstObjects.Items[item].ToString() + "DataRow", sPath, "ROW", getDataRow, "cs");
 
                     f.Save(lstObjects.Items[item].ToString() + "StoreProceduce", sPath, "StoreProceduce", procedueCode, "sql");
                     // f.Save(lstObjects.Items[item].ToString() + "Validation", sPath, "Validation", validationCode, "cs");

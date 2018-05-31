@@ -18,8 +18,7 @@ namespace GenerationClass.Code
             {
                 if (value.Contains(key))
                 {
-                    Type type;
-                    DataTypes.TryGetValue(key, out type);
+                    DataTypes.TryGetValue(key, out Type type);
 
                     if (type != null)
                     {

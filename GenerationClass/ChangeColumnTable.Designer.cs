@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeColumnTable));
             this.btnClose = new System.Windows.Forms.Button();
             this.lblPath = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -59,9 +60,10 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(382, 250);
+            this.btnClose.Location = new System.Drawing.Point(509, 308);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(80, 23);
+            this.btnClose.Size = new System.Drawing.Size(107, 28);
             this.btnClose.TabIndex = 39;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -70,16 +72,18 @@
             // lblPath
             // 
             this.lblPath.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.lblPath.Location = new System.Drawing.Point(20, 224);
+            this.lblPath.Location = new System.Drawing.Point(27, 276);
+            this.lblPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(324, 23);
+            this.lblPath.Size = new System.Drawing.Size(432, 28);
             this.lblPath.TabIndex = 40;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(203, 250);
+            this.btnCancel.Location = new System.Drawing.Point(271, 308);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(80, 23);
+            this.btnCancel.Size = new System.Drawing.Size(107, 28);
             this.btnCancel.TabIndex = 38;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -87,9 +91,10 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(294, 250);
+            this.btnSave.Location = new System.Drawing.Point(392, 308);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(80, 23);
+            this.btnSave.Size = new System.Drawing.Size(107, 28);
             this.btnSave.TabIndex = 37;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -97,9 +102,10 @@
             // 
             // btnSaveScript
             // 
-            this.btnSaveScript.Location = new System.Drawing.Point(383, 222);
+            this.btnSaveScript.Location = new System.Drawing.Point(511, 273);
+            this.btnSaveScript.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSaveScript.Name = "btnSaveScript";
-            this.btnSaveScript.Size = new System.Drawing.Size(80, 23);
+            this.btnSaveScript.Size = new System.Drawing.Size(107, 28);
             this.btnSaveScript.TabIndex = 35;
             this.btnSaveScript.Text = "Save Script";
             this.btnSaveScript.UseVisualStyleBackColor = true;
@@ -111,9 +117,10 @@
             // radEditColum
             // 
             this.radEditColum.AutoSize = true;
-            this.radEditColum.Location = new System.Drawing.Point(17, 16);
+            this.radEditColum.Location = new System.Drawing.Point(23, 20);
+            this.radEditColum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radEditColum.Name = "radEditColum";
-            this.radEditColum.Size = new System.Drawing.Size(86, 17);
+            this.radEditColum.Size = new System.Drawing.Size(111, 21);
             this.radEditColum.TabIndex = 32;
             this.radEditColum.TabStop = true;
             this.radEditColum.Text = "Edit Columns";
@@ -129,9 +136,10 @@
             this.Length,
             this.NewAllowNull,
             this.NewDefaultValue});
-            this.grvAddNewColumn.Location = new System.Drawing.Point(0, 3);
+            this.grvAddNewColumn.Location = new System.Drawing.Point(0, 4);
+            this.grvAddNewColumn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.grvAddNewColumn.Name = "grvAddNewColumn";
-            this.grvAddNewColumn.Size = new System.Drawing.Size(446, 174);
+            this.grvAddNewColumn.Size = new System.Drawing.Size(595, 214);
             this.grvAddNewColumn.TabIndex = 0;
             // 
             // NewColumnName
@@ -167,18 +175,20 @@
             // pnlAddNewColum
             // 
             this.pnlAddNewColum.Controls.Add(this.grvAddNewColumn);
-            this.pnlAddNewColum.Location = new System.Drawing.Point(17, 43);
+            this.pnlAddNewColum.Location = new System.Drawing.Point(23, 53);
+            this.pnlAddNewColum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlAddNewColum.Name = "pnlAddNewColum";
-            this.pnlAddNewColum.Size = new System.Drawing.Size(446, 174);
+            this.pnlAddNewColum.Size = new System.Drawing.Size(595, 214);
             this.pnlAddNewColum.TabIndex = 36;
             this.pnlAddNewColum.Visible = false;
             // 
             // pnlEditColum
             // 
             this.pnlEditColum.Controls.Add(this.grvEditColums);
-            this.pnlEditColum.Location = new System.Drawing.Point(17, 43);
+            this.pnlEditColum.Location = new System.Drawing.Point(23, 53);
+            this.pnlEditColum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlEditColum.Name = "pnlEditColum";
-            this.pnlEditColum.Size = new System.Drawing.Size(446, 174);
+            this.pnlEditColum.Size = new System.Drawing.Size(595, 214);
             this.pnlEditColum.TabIndex = 34;
             // 
             // grvEditColums
@@ -192,9 +202,10 @@
             this.EditLength,
             this.AllowNull,
             this.EditDefaultValue});
-            this.grvEditColums.Location = new System.Drawing.Point(0, 3);
+            this.grvEditColums.Location = new System.Drawing.Point(0, 4);
+            this.grvEditColums.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.grvEditColums.Name = "grvEditColums";
-            this.grvEditColums.Size = new System.Drawing.Size(446, 174);
+            this.grvEditColums.Size = new System.Drawing.Size(595, 214);
             this.grvEditColums.TabIndex = 0;
             // 
             // EditColumnName
@@ -230,9 +241,10 @@
             // radAddNewColum
             // 
             this.radAddNewColum.AutoSize = true;
-            this.radAddNewColum.Location = new System.Drawing.Point(171, 16);
+            this.radAddNewColum.Location = new System.Drawing.Point(228, 20);
+            this.radAddNewColum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radAddNewColum.Name = "radAddNewColum";
-            this.radAddNewColum.Size = new System.Drawing.Size(112, 17);
+            this.radAddNewColum.Size = new System.Drawing.Size(143, 21);
             this.radAddNewColum.TabIndex = 33;
             this.radAddNewColum.TabStop = true;
             this.radAddNewColum.Text = "Add New Columns";
@@ -243,9 +255,10 @@
             // 
             this.btnSelectFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnSelectFile.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSelectFile.Location = new System.Drawing.Point(350, 222);
+            this.btnSelectFile.Location = new System.Drawing.Point(467, 273);
+            this.btnSelectFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSelectFile.Name = "btnSelectFile";
-            this.btnSelectFile.Size = new System.Drawing.Size(27, 23);
+            this.btnSelectFile.Size = new System.Drawing.Size(36, 28);
             this.btnSelectFile.TabIndex = 41;
             this.btnSelectFile.TabStop = false;
             this.btnSelectFile.Text = "...";
@@ -254,9 +267,9 @@
             // 
             // ChangeColumnTable
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 293);
+            this.ClientSize = new System.Drawing.Size(649, 361);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.btnCancel);
@@ -267,6 +280,8 @@
             this.Controls.Add(this.pnlEditColum);
             this.Controls.Add(this.radAddNewColum);
             this.Controls.Add(this.btnSelectFile);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ChangeColumnTable";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ChangeColumnTable";

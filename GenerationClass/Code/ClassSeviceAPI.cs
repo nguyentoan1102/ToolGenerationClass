@@ -5,7 +5,7 @@ namespace GenerationClass.Code
 {
     public class ClassSeviceAPI
     {
-        private static Dictionary<string, Type> DataTypes = new Dictionary<string, Type>();
+        private static readonly Dictionary<string, Type> DataTypes = new Dictionary<string, Type>();
 
         #region Code Generator Core
 

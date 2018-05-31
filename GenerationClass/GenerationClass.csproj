@@ -173,6 +173,7 @@
     <Content Include="DLL\system.data.oracleclient.dll" />
     <Content Include="Images\About.png" />
     <Content Include="Images\Connect.png" />
+    <Content Include="Images\Custom-Icon-Design-Pretty-Office-9-Open-file.ico" />
     <Content Include="Images\Custom.png" />
     <Content Include="Images\db-add.png" />
     <Content Include="Images\Exit.png" />

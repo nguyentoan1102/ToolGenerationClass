@@ -19,6 +19,8 @@
             get;
             set;
         }
+
+        public object IsNullAble { get; set; }
     }
 
     public class GetType

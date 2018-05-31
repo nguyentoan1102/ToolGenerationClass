@@ -43,6 +43,127 @@ namespace GenerationClass.Code
 
         #endregion Fill types dictionary
 
+        public static string GeneralMethodGetObjectFromDataRow(List<Entity> entities, List<GetType> entitiesDataType, string namespaceIn, string classModifiers, string tableName)
+        {
+            GenrationComment comment = new GenrationComment();
+            var result = string.Empty;
+            var staticTxt = string.Empty;
+            string table = tableName.ToLower();
+            //Create  DLL
+            result += comment.GetDLLAPICreate();
+            result += "namespace Public" + Environment.NewLine;
+            result += "{" + Environment.NewLine;
+
+            #region Table Shema
+
+            if (classModifiers.Length > 0)
+            {
+                result += "\t" + classModifiers + " class " + tableName + "Public" + Environment.NewLine;
+            }
+            else
+            {
+                result += "\t" + " class " + tableName + "Public" + Environment.NewLine;
+            }
+
+            result += "\t{" + Environment.NewLine;
+            result += "\t\tPublic Get" + tableName + "ByDataRow" + "(DataRow row)" + Environment.NewLine;
+            result += "\t\t{" + Environment.NewLine;
+            result += "\t\t\t" + tableName + "  " + table + " = New " + tableName + "();" + Environment.NewLine;
+
+            for (int i = 0; i < entities.Count; i++)
+            {
+                bool b = false;
+                if (entities[i].Type.ToString() == "bit")
+                {
+                    if (entities[i].IsNullAble.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field.ToString() + "=" + entities[i].Field.ToString() + "== DBNull.Value ?false: " + "(" + "bool " + ")" + entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field.ToString() + "=" + "(" + "bool " + ")" + entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    }
+                }
+                else if (entities[i].Type.ToString() == "bigint")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =" + entities[i].Field.ToString() + "== DBNull.Value ? 0 :" + "(" + "long " + ")" + entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "binary" || entities[i].Type.ToString() == "image" || entities[i].Type.ToString() == "rowversion" || entities[i].Type.ToString() == "timestamp" || entities[i].Type.ToString() == "varbinary")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Byte[] " + ")" +
+                           entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "date" || entities[i].Type.ToString() == "datetime" || entities[i].Type.ToString() == "smalldatetime")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "DateTime " + ")" +
+                          entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "decimal" || entities[i].Type.ToString() == "money" || entities[i].Type.ToString() == "numeric" || entities[i].Type.ToString() == "smallmoney")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Decimal " + ")" +
+                          entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "float")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "double " + ")" +
+                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "int" || entities[i].Type.ToString() == "smallint")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "int " + ")" +
+                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "real")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Single " + ")" +
+                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "time")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "TimeSpan " + ")" +
+                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "tinyint")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Byte " + ")" +
+                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "uniqueidentifier")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Guid " + ")" +
+                          entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (entities[i].Type.ToString() == "xml")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Xml " + ")" +
+                          entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() == "string")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "string " + ")" +
+                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                }
+                else if (ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() != "String")
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + ")" +
+                             entities[i].Field.ToString() + Environment.NewLine;
+                }
+                else
+                {
+                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + ")" +
+                            entities[i].Field.ToString() + Environment.NewLine;
+                }
+            }
+
+            result += "\t\t}" + Environment.NewLine;
+            result += "\t}" + Environment.NewLine;
+            result += "}";
+
+            #endregion Table Shema
+
+            return result;
+        }
+
         public static string GenerateCode(List<Entity> entities, List<GetType> entitiesDataType, string namespaceIn, string classModifiers, string tableName)
         {
             GenrationComment comment = new GenrationComment();
@@ -146,9 +267,9 @@ namespace GenerationClass.Code
                         }
                         else if (entities[i].Type.ToString() == "float")
                         {
-                            result += "\t \tprotected" + staticTxt + " " + "Double " + " _" +
+                            result += "\t \tprotected" + staticTxt + " " + "double " + " _" +
                                  entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  Double " + entities[i].Field.ToString() + Environment.NewLine;
+                            result += "\t \tpublic  double " + entities[i].Field.ToString() + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
                             result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
@@ -223,9 +344,9 @@ namespace GenerationClass.Code
                         }
                         else if (ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() == "string")
                         {
-                            result += "\t \tprotected" + staticTxt + " " + "String " + " _" +
+                            result += "\t \tprotected" + staticTxt + " " + "string " + " _" +
                                  entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  String " + entities[i].Field.ToString() + Environment.NewLine;
+                            result += "\t \tpublic  string " + entities[i].Field.ToString() + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
                             result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
@@ -1497,8 +1618,7 @@ namespace GenerationClass.Code
             {
                 if (value.Contains(key))
                 {
-                    Type type;
-                    DataTypes.TryGetValue(key, out type);
+                    DataTypes.TryGetValue(key, out Type type);
 
                     if (type != null)
                     {
