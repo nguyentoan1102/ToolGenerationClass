@@ -223,9 +223,9 @@ namespace GenerationClass.Code
                         }
                         else if (entities[i].Type.ToString() == "bigint")
                         {
-                            result += "\t \tprotected" + staticTxt + " " + "int " + " _" +
+                            result += "\t \tprotected" + staticTxt + " " + "long " + " _" +
                                     entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  int " + entities[i].Field.ToString() + Environment.NewLine;
+                            result += "\t \tpublic  long " + entities[i].Field.ToString() + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
                             result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
