@@ -271,12 +271,12 @@ namespace GenerationClass
                     procedueCode = Code.Generation.GenerateStoreProceduce(entity, entityType, GetNameSpace(), GetClassModifiers(), lstObjects.Items[item].ToString());
                     getDataRow = Code.Generation.GeneralMethodGetObjectFromDataRow(entity, entityType, GetNameSpace(), GetClassModifiers(), lstObjects.Items[item].ToString());
 
-                    f.Save(lstObjects.Items[item].ToString() + "Public", sPath, "Public", apiCode, "cs");
-                    f.Save(lstObjects.Items[item].ToString() + "BUS", sPath, "BUS", bllCode, "cs");
-                    f.Save(lstObjects.Items[item].ToString() + "DAL", sPath, "DAL", dataAceeCode, "cs");
-                    f.Save(lstObjects.Items[item].ToString() + "DataRow", sPath, "ROW", getDataRow, "cs");
+                    f.Save(lstObjects.Items[item] + "Public", sPath, "Public", apiCode, "cs");
+                    f.Save(lstObjects.Items[item] + "BUS", sPath, "BUS", bllCode, "cs");
+                    f.Save(lstObjects.Items[item] + "DAL", sPath, "DAL", dataAceeCode, "cs");
+                    f.Save(lstObjects.Items[item] + "DataRow", sPath, "ROW", getDataRow, "cs");
 
-                    f.Save(lstObjects.Items[item].ToString() + "StoreProceduce", sPath, "StoreProceduce", procedueCode, "sql");
+                    f.Save(lstObjects.Items[item] + "StoreProceduce", sPath, "StoreProceduce", procedueCode, "sql");
                     // f.Save(lstObjects.Items[item].ToString() + "Validation", sPath, "Validation", validationCode, "cs");
                 }
                 //Copy database.cs

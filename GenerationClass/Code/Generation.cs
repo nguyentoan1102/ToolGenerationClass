@@ -58,100 +58,183 @@ namespace GenerationClass.Code
 
             if (classModifiers.Length > 0)
             {
-                result += "\t" + classModifiers + " class " + tableName + "Public" + Environment.NewLine;
+                result += "\t" + classModifiers + " class " + tableName + "public" + Environment.NewLine;
             }
             else
             {
-                result += "\t" + " class " + tableName + "Public" + Environment.NewLine;
+                result += "\t" + " class " + tableName + "public" + Environment.NewLine;
             }
 
             result += "\t{" + Environment.NewLine;
-            result += "\t\tPublic Get" + tableName + "ByDataRow" + "(DataRow row)" + Environment.NewLine;
+            result += "\t\tpublic  " + tableName + " GetByDataRow" + "(DataRow row)" + Environment.NewLine;
             result += "\t\t{" + Environment.NewLine;
-            result += "\t\t\t" + tableName + "  " + table + " = New " + tableName + "();" + Environment.NewLine;
+            result += "\t\t\t" + tableName + "  " + table + " = new " + tableName + "();" + Environment.NewLine;
 
             for (int i = 0; i < entities.Count; i++)
             {
                 bool b = false;
                 if (entities[i].Type.ToString() == "bit")
                 {
-                    if (entities[i].IsNullAble.ToString() == "YES")
+                    if (entities[i].AllowNull.ToString() == "YES")
                     {
-                        result += "\t\t\t" + table + "." + entities[i].Field.ToString() + "=" + entities[i].Field.ToString() + "== DBNull.Value ?false: " + "(" + "bool " + ")" + entities[i].Field.ToString() + ";" + Environment.NewLine;
+                        result += "\t\t\t" + table + "." + entities[i].Field + "=" + " row[\"" + entities[i].Field + "\"]+== DBNull.Value ?false :" + "(" + "bool " + ")" + "row[\"" + entities[i].Field + "\"]" + "; " + Environment.NewLine;
                     }
                     else
                     {
-                        result += "\t\t\t" + table + "." + entities[i].Field.ToString() + "=" + "(" + "bool " + ")" + entities[i].Field.ToString() + ";" + Environment.NewLine;
+                        result += "\t\t\t" + table + "." + entities[i].Field + "=" + "(" + "bool " + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
                     }
                 }
                 else if (entities[i].Type.ToString() == "bigint")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =" + entities[i].Field.ToString() + "== DBNull.Value ? 0 :" + "(" + "long " + ")" + entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "long " + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =" + "(" + "long " + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "binary" || entities[i].Type.ToString() == "image" || entities[i].Type.ToString() == "rowversion" || entities[i].Type.ToString() == "timestamp" || entities[i].Type.ToString() == "varbinary")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Byte[] " + ")" +
-                           entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "Byte[] " + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "Byte[] " + ")" +
+                         " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "date" || entities[i].Type.ToString() == "datetime" || entities[i].Type.ToString() == "smalldatetime")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "DateTime " + ")" +
-                          entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? DateTime.MinValue : " + "(" + "DateTime " + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "DateTime " + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "decimal" || entities[i].Type.ToString() == "money" || entities[i].Type.ToString() == "numeric" || entities[i].Type.ToString() == "smallmoney")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Decimal " + ")" +
-                          entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "Decimal" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "Decimal " + ")" +
+                       " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "float")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "double " + ")" +
-                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "double" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "double " + ")" +
+                        " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "int" || entities[i].Type.ToString() == "smallint")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "int " + ")" +
-                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "int" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "int " + ")" +
+                            " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "real")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Single " + ")" +
-                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "Single" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "Single " + ")" +
+                        " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "time")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "TimeSpan " + ")" +
-                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "TimeSpan" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "TimeSpan " + ")" +
+                       " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "tinyint")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Byte " + ")" +
-                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "Byte" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "Byte " + ")" +
+                       " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "uniqueidentifier")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Guid " + ")" +
-                          entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "Guid" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "Guid " + ")" +
+                       " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (entities[i].Type.ToString() == "xml")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "Xml " + ")" +
-                          entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? 0 : " + "(" + "Xml" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "Xml " + ")" +
+                        " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() == "string")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + "string " + ")" +
-                         entities[i].Field.ToString() + ";" + Environment.NewLine;
+                    if (entities[i].AllowNull.ToString() == "YES")
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " = " + " row[\"" + entities[i].Field + "\"]" + " == DBNull.Value ? string.Empty : " + "(" + "string" + ")" + " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
+                    else
+                    {
+                        result += "\t\t\t" + table + "." + entities[i].Field + " =(" + "string " + ")" +
+                       " row[\"" + entities[i].Field + "\"]" + ";" + Environment.NewLine;
+                    }
                 }
                 else if (ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() != "String")
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + ")" +
-                             entities[i].Field.ToString() + Environment.NewLine;
+                    result += "\t\t\t" + table + "." + entities[i].Field + " =(" + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + ")" +
+                             entities[i].Field + Environment.NewLine;
                 }
                 else
                 {
-                    result += "\t\t\t" + table + "." + entities[i].Field.ToString() + " =(" + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + ")" +
-                            entities[i].Field.ToString() + Environment.NewLine;
+                    result += "\t\t\t" + table + "." + entities[i].Field + " =(" + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + ")" +
+                            entities[i].Field + Environment.NewLine;
                 }
             }
 
@@ -213,166 +296,166 @@ namespace GenerationClass.Code
                         if (entities[i].Type.ToString() == "bit")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "bool " + " _" +
-                                     entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  bool " + entities[i].Field.ToString() + Environment.NewLine;
+                                     entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  bool " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += "_" + entities[i].Field.ToString() + "=value;\t}" + Environment.NewLine;
+                            result += "_" + entities[i].Field + "=value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "bigint")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "long " + " _" +
-                                    entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  long " + entities[i].Field.ToString() + Environment.NewLine;
+                                    entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  long " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "binary" || entities[i].Type.ToString() == "image" || entities[i].Type.ToString() == "rowversion" || entities[i].Type.ToString() == "timestamp" || entities[i].Type.ToString() == "varbinary")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "Byte[] " + " _" +
-                                   entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  Byte[] " + entities[i].Field.ToString() + Environment.NewLine;
+                                   entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  Byte[] " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "date" || entities[i].Type.ToString() == "datetime" || entities[i].Type.ToString() == "smalldatetime")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "DateTime " + " _" +
-                                  entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  DateTime " + entities[i].Field.ToString() + Environment.NewLine;
+                                  entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  DateTime " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "decimal" || entities[i].Type.ToString() == "money" || entities[i].Type.ToString() == "numeric" || entities[i].Type.ToString() == "smallmoney")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "Decimal " + " _" +
-                                  entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  Decimal " + entities[i].Field.ToString() + Environment.NewLine;
+                                  entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  Decimal " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += "  _" + entities[i].Field.ToString() + "=value;\t}" + Environment.NewLine;
+                            result += "  _" + entities[i].Field + "=value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "float")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "double " + " _" +
-                                 entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  double " + entities[i].Field.ToString() + Environment.NewLine;
+                                 entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  double " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "int" || entities[i].Type.ToString() == "smallint")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "int " + " _" +
-                                 entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  int " + entities[i].Field.ToString() + Environment.NewLine;
+                                 entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  int " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += "_" + entities[i].Field.ToString() + "= value ;\t}" + Environment.NewLine;
+                            result += "_" + entities[i].Field + "= value ;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "real")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "Single " + " _" +
-                                 entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  Single " + entities[i].Field.ToString() + Environment.NewLine;
+                                 entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  Single " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "time")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "TimeSpan " + " _" +
-                                 entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  TimeSpan " + entities[i].Field.ToString() + Environment.NewLine;
+                                 entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  TimeSpan " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "tinyint")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "Byte " + " _" +
-                                 entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  Byte " + entities[i].Field.ToString() + Environment.NewLine;
+                                 entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  Byte " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "uniqueidentifier")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "Guid " + " _" +
-                                  entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  Guid " + entities[i].Field.ToString() + Environment.NewLine;
+                                  entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  Guid " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += "_" + entities[i].Field.ToString() + "= value ;\t}" + Environment.NewLine;
+                            result += "_" + entities[i].Field + "= value ;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (entities[i].Type.ToString() == "xml")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "Xml " + " _" +
-                                  entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  Xml " + entities[i].Field.ToString() + Environment.NewLine;
+                                  entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  Xml " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() == "string")
                         {
                             result += "\t \tprotected" + staticTxt + " " + "string " + " _" +
-                                 entities[i].Field.ToString() + ";" + Environment.NewLine;
-                            result += "\t \tpublic  string " + entities[i].Field.ToString() + Environment.NewLine;
+                                 entities[i].Field + ";" + Environment.NewLine;
+                            result += "\t \tpublic  string " + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else if (ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() != "String")
                         {
                             result += "\t \tprotected" + staticTxt + " " + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + " _" +
-                                     entities[i].Field.ToString() + " { get ; set;}";
-                            result += "\t \tpublic   " + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + entities[i].Field.ToString() + Environment.NewLine;
+                                     entities[i].Field + " { get ; set;}";
+                            result += "\t \tpublic   " + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                         else
                         {
                             result += "\t \tprotected" + staticTxt + " " + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + " _" +
-                                    entities[i].Field.ToString() + " { get ; set;}";
-                            result += "\t \tpublic   " + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + entities[i].Field.ToString() + Environment.NewLine;
+                                    entities[i].Field + " { get ; set;}";
+                            result += "\t \tpublic   " + ClassHelperMethod.GetType(entities[i].Type.ToString()).Replace("System.", "") + entities[i].Field + Environment.NewLine;
                             result += "\t \t\t{" + Environment.NewLine;
-                            result += " \t \t\t\t get \t{ return _" + entities[i].Field.ToString() + ";\t}" + Environment.NewLine;
+                            result += " \t \t\t\t get \t{ return _" + entities[i].Field + ";\t}" + Environment.NewLine;
                             result += "\t \t\t\tset \t{";
-                            result += " _" + entities[i].Field.ToString() + "= value;\t}" + Environment.NewLine;
+                            result += " _" + entities[i].Field + "= value;\t}" + Environment.NewLine;
                             result += "\t \t\t}" + Environment.NewLine;
                         }
                     }
@@ -471,125 +554,271 @@ namespace GenerationClass.Code
                                     }
                                     else
                                     {
-                                        if (entities[i].Type.ToString() == "bit")
+                                        switch (entities[i].Type.ToString())
                                         {
-                                            //result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Bit" + ", null, " + tableName.ToLower() + "Obj." + entities[i].Field.ToString() + ");" + Environment.NewLine;
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Bit" + ", 1, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "bigint")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.BigInt" + ", 4, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "image")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "binary")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "rowversion")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "timestamp")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "varbinary")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.VarBinary" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "date")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Date" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "datetime")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "smalldatetime")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "decimal")
-                                        {
-                                            result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "money")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "numeric")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "smallmoney")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "float")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Float" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "int")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "smallint")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.SmallInt" + ", 4, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "real")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Real" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "time")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Time" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "tinyint")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.TinyInt" + ", 4, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "uniqueidentifier")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.UniqueIdentifier" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "xml")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Xml" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "char")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Char" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "nchar")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "ntext")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NText" + ",2147483647, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "nvarchar")
-                                        {
-                                            if (entities[i].Length.ToString() != "-1")
-                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NVarChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                            else
-                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NVarChar" + ", 4000, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "text")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Text" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else if (entities[i].Type.ToString() == "varchar")
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.VarChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                        }
-                                        else
-                                        {
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType." + GetType(entities[i].Type.ToString()).Replace("System.", "") + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
+                                            case "bit":
+                                                //result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Bit" + ", null, " + tableName.ToLower() + "Obj." + entities[i].Field.ToString() + ");" + Environment.NewLine;
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Bit" + ", 1, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Bit" + ", 1, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "bigint":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.BigInt" + ", 4, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.BigInt" + ", 4, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "image":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "binary":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + "??DBNull.Value" + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "rowversion":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "timestamp":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "varbinary":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarBinary" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarBinary" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "date":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Date" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Date" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "datetime":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + "??  DBNull.Value" + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "smalldatetime":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "decimal":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "money":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "numeric":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "smallmoney":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "float":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Float" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Float" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "int":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "smallint":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.SmallInt" + ", 4, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.SmallInt" + ", 4, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "real":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Real" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Real" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "time":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Time" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Time" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "tinyint":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.TinyInt" + ", 4, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.TinyInt" + ", 4, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "uniqueidentifier":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.UniqueIdentifier" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.UniqueIdentifier" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "xml":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Xml" + ", null, " + "(object)p." + entities[i].Field + "?? DBNull.Value " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Xml" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "char":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Char" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + " ?? DBNull.Value " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Char" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "nchar":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "ntext":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NText" + ",2147483647, " + "(object)p." + entities[i].Field + " ?? DBNull.Value " + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NText" + ",2147483647, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "nvarchar":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    if (entities[i].Length.ToString() != "-1")
+                                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + "  ?? DBNull.Value " + ")," + Environment.NewLine;
+                                                    else
+                                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", 4000, " + "(object)p." + entities[i].Field + " ?? DBNull.Value" + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                if (entities[i].Length.ToString() != "-1")
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                else
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", 4000, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "text":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Text" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + " ?? DBNull.Value" + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Text" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            case "varchar":
+                                                if (entities[i].AllowNull.ToString() == "YES")
+                                                {
+                                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + " ?? DBNull.Value" + ")," + Environment.NewLine;
+                                                    break;
+                                                }
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
+
+                                            default:
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType." + GetType(entities[i].Type.ToString()).Replace("System.", "") + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                                break;
                                         }
                                     }
                                 }
@@ -599,7 +828,7 @@ namespace GenerationClass.Code
                             for (int i = 0; i < entitiesDataType.Count - 1; i++)
                             {
                                 if (entitiesDataType[i].TypeField.ToString().ToUpper() == "INT")
-                                    result += "\t\t        cn.MakeOutParam(" + "\"" + "@" + entities[i].Field.ToString() + "_Output" + "\", " + "SqlDbType.Int" + ", 4" + ")," + Environment.NewLine;
+                                    result += "\t\t        cn.MakeOutParam(" + "\"" + "@" + entities[i].Field + "_Output" + "\", " + "SqlDbType.Int" + ", 4" + ")," + Environment.NewLine;
 
                                 //else
                                 //    result += "\t\t        cn.MakeOutParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + " SqlDbType." + entitiesDataType[i].TypeField.ToString() + "," + entitiesDataType[i].Length.ToString() + ");" + Environment.NewLine;
@@ -607,22 +836,25 @@ namespace GenerationClass.Code
                             for (int i = entitiesDataType.Count - 1; i < entitiesDataType.Count; i++)
                             {
                                 if (entitiesDataType[i].TypeField.ToString().ToUpper() == "INT")
-                                    result += "\t\t        cn.MakeOutParam(" + "\"" + "@" + entities[i].Field.ToString() + "_Output" + "\", " + "SqlDbType.Int" + ", 4" + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeOutParam(" + "\"" + "@" + entities[i].Field + "_Output" + "\", " + "SqlDbType.Int" + ", 4" + ")" + Environment.NewLine;
 
                                 //else
                                 //    result += "\t\t        cn.MakeOutParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + " SqlDbType." + entitiesDataType[i].TypeField.ToString() + "," + entitiesDataType[i].Length.ToString() + ");" + Environment.NewLine;
                             }
                             result += "        \t\t};" + Environment.NewLine;
 
-                            result += "\t\t        cn.RunProc(" + "\"sp_" + tableName + "_Insert" + "\"" + ",prams);" + Environment.NewLine;
-                            result += "\t\t        cn.Dispose();" + Environment.NewLine;
                             result += "\t\t        try" + Environment.NewLine;
                             result += "\t\t        {" + Environment.NewLine;
+                            result += "\t\t          cn.RunProc(" + "\"sp_" + tableName + "_Insert" + "\"" + ",prams);" + Environment.NewLine;
                             result += "\t\t          return (int)prams[0].Value;" + Environment.NewLine;
                             result += "\t\t        }" + Environment.NewLine;
-                            result += "\t\t        catch (Exception)" + Environment.NewLine;
+                            result += "\t\t        catch (Exception ex)" + Environment.NewLine;
                             result += "\t\t        {" + Environment.NewLine;
-                            result += "\t\t         return 1;" + Environment.NewLine;
+                            result += "\t\t         return 0;" + Environment.NewLine;
+                            result += "\t\t       }" + Environment.NewLine;
+                            result += "\t\t         finally" + Environment.NewLine;
+                            result += "\t\t        {" + Environment.NewLine;
+                            result += "\t\t        cn.Dispose();" + Environment.NewLine;
                             result += "\t\t       }" + Environment.NewLine;
                             result += "        }\t\t " + Environment.NewLine;
                         }
@@ -640,129 +872,274 @@ namespace GenerationClass.Code
                             result += "        \t\t{" + Environment.NewLine;
                             for (int i = 0; i < entities.Count - 1; i++)
                             {
-                                #region para
+                                switch (entities[i].Type.ToString())
+                                {
+                                    case "bit":
+                                        //result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Bit" + ", null, " + tableName.ToLower() + "Obj." + entities[i].Field.ToString() + ");" + Environment.NewLine;
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Bit" + ", 1, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Bit" + ", 1, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
 
-                                if (entities[i].Type.ToString() == "bit")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Bit" + ", 1, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "bigint")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.BigInt" + ", 4, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "image")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "binary")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "rowversion")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "timestamp")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "varbinary")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.VarBinary" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "date")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "datetime")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "smalldatetime")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "decimal")
-                                {
-                                    result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "money")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Money" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "numeric")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "smallmoney")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.SmallMoney" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "float")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Float" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "int")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "smallint")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "real")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "time")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Time" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "tinyint")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "uniqueidentifier")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.UniqueIdentifier" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "xml")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Xml" + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "char")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Char" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "nchar")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "ntext")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NText" + ",2147483647, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "nvarchar")
-                                {
-                                    if (entities[i].Length.ToString() != "-1")
-                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NVarChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                    else
-                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NVarChar" + ", 4000, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "text")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Text" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else if (entities[i].Type.ToString() == "varchar")
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.VarChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
-                                }
-                                else
-                                {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType." + GetType(entities[i].Type.ToString()).Replace("System.", "") + ", null, " + "p." + entities[i].Field.ToString() + ")," + Environment.NewLine;
+                                    case "bigint":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.BigInt" + ", 4, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.BigInt" + ", 4, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "image":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "binary":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + "??DBNull.Value" + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "rowversion":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "timestamp":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "varbinary":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarBinary" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarBinary" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "date":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Date" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Date" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "datetime":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + "??  DBNull.Value" + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "smalldatetime":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "decimal":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "money":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "numeric":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "smallmoney":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "float":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Float" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Float" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "int":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "smallint":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.SmallInt" + ", 4, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.SmallInt" + ", 4, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "real":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Real" + ", 20, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Real" + ", 20, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "time":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Time" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Time" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "tinyint":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.TinyInt" + ", 4, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.TinyInt" + ", 4, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "uniqueidentifier":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.UniqueIdentifier" + ", null, " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.UniqueIdentifier" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "xml":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Xml" + ", null, " + "(object)p." + entities[i].Field + "?? DBNull.Value " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Xml" + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "char":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Char" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + " ?? DBNull.Value " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Char" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "nchar":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + " ?? DBNull.Value  " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "ntext":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NText" + ",2147483647, " + "(object)p." + entities[i].Field + " ?? DBNull.Value " + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NText" + ",2147483647, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "nvarchar":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            if (entities[i].Length.ToString() != "-1")
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + "  ?? DBNull.Value " + ")," + Environment.NewLine;
+                                            else
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", 4000, " + "(object)p." + entities[i].Field + " ?? DBNull.Value" + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        if (entities[i].Length.ToString() != "-1")
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        else
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", 4000, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "text":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Text" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + " ?? DBNull.ValueS" + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Text" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    case "varchar":
+                                        if (entities[i].AllowNull.ToString() == "YES")
+                                        {
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + " ?? DBNull.Value" + ")," + Environment.NewLine;
+                                            break;
+                                        }
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
+
+                                    default:
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType." + GetType(entities[i].Type.ToString()).Replace("System.", "") + ", null, " + "(object)p." + entities[i].Field + ")," + Environment.NewLine;
+                                        break;
                                 }
 
-                                #endregion para
+                                #endregion Update
                             }
                             for (int i = entities.Count - 1; i < entities.Count; i++)
                             {
@@ -770,213 +1147,228 @@ namespace GenerationClass.Code
 
                                 if (entities[i].Type.ToString() == "bit")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Bit" + ", 1, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Bit" + ", 1, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "bigint")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.BigInt" + ", 4, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.BigInt" + ", 4, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "image")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "binary")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Image" + ", 4000, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "rowversion")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "timestamp")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Timestamp" + ", null, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "varbinary")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.VarBinary" + ", null, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarBinary" + ", null, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "date")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "datetime")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "smalldatetime")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.DateTime" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "decimal")
                                 {
-                                    result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        sqlCmd.SetPara(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "money")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Money" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Money" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "numeric")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "smallmoney")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.SmallMoney" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.SmallMoney" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "float")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Float" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Float" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "int")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "smallint")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "real")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Decimal" + ", 20, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "time")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Time" + ", null, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Time" + ", null, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "tinyint")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Int" + ", 4, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "uniqueidentifier")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.UniqueIdentifier" + ", null, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.UniqueIdentifier" + ", null, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "xml")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Xml" + ", null, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Xml" + ", null, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "char")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Char" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Char" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "nchar")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "ntext")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NText" + ",2147483647, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NText" + ",2147483647, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "nvarchar")
                                 {
                                     if (entities[i].Length.ToString() != "-1")
-                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NVarChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                     else
-                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.NVarChar" + ", 4000, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.NVarChar" + ", 4000, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "text")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Text" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Text" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else if (entities[i].Type.ToString() == "varchar")
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.VarChar" + ", " + entities[i].Length.ToString() + ", " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.VarChar" + ", " + entities[i].Length + ", " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
                                 else
                                 {
-                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType." + GetType(entities[i].Type.ToString()).Replace("System.", "") + ", null, " + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                    result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType." + GetType(entities[i].Type.ToString()).Replace("System.", "") + ", null, " + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                 }
 
                                 #endregion para
                             }
                             result += "        \t\t};" + Environment.NewLine;
-                            result += "\t\t        cn.RunProc(" + "\"sp_" + tableName + "_Update" + "\"" + ",prams);" + Environment.NewLine;
-                            result += "\t\t        cn.Dispose();" + Environment.NewLine;
+
                             result += "\t\t        try" + Environment.NewLine;
                             result += "\t\t        {" + Environment.NewLine;
+                            result += "\t\t          cn.RunProc(" + "\"sp_" + tableName + "_Update" + "\"" + ",prams);" + Environment.NewLine;
                             result += "\t\t          return (int)prams[0].Value;" + Environment.NewLine;
                             result += "\t\t        }" + Environment.NewLine;
-                            result += "\t\t        catch (Exception)" + Environment.NewLine;
+                            result += "\t\t        catch (Exception ex)" + Environment.NewLine;
                             result += "\t\t        {" + Environment.NewLine;
-                            result += "\t\t         return 1;" + Environment.NewLine;
+                            result += "\t\t         return 0;" + Environment.NewLine;
                             result += "\t\t       }" + Environment.NewLine;
-                            result += "\t\t}" + Environment.NewLine;
-                        }
+                            result += "\t\t       finally" + Environment.NewLine;
+                            result += "\t\t       {" + Environment.NewLine;
+                            result += "\t\t        cn.Dispose();" + Environment.NewLine;
+                            result += "\t\t       }" + Environment.NewLine;
+                            result += "        }\t\t " + Environment.NewLine;
 
-                        #endregion Update
+                            #endregion Generation Class
 
-                        #region Delete
+                            #region Delete
 
-                        if (entitiesDataType.Count >= 1)
-                        {
-                            result += "\t\tpublic int Delete_" + tableName + "(" + tableName + "Public" + " p)" + Environment.NewLine;
-                            result += "\t\t{" + Environment.NewLine;
-                            result += "\t\tDatabase cn = new Database();" + Environment.NewLine;
-                            result += "\t\t        SqlParameter[] prams = new SqlParameter[]" + Environment.NewLine;
-                            result += "        \t\t{" + Environment.NewLine;
-
-                            #region para
-
-                            int i = 0;
-                            for (int j = 0; j < entitiesDataType.Count; j++)
+                            if (entitiesDataType.Count >= 1)
                             {
-                                if (entities[i].Field.ToString() == entitiesDataType[j].NameField.ToString())
+                                result += "\t\tpublic int Delete_" + tableName + "(" + tableName + "Public" + " p)" + Environment.NewLine;
+                                result += "\t\t{" + Environment.NewLine;
+                                result += "\t\tDatabase cn = new Database();" + Environment.NewLine;
+                                result += "\t\t        SqlParameter[] prams = new SqlParameter[]" + Environment.NewLine;
+                                result += "        \t\t{" + Environment.NewLine;
+
+                                #region para
+
+                                int i = 0;
+                                for (int j = 0; j < entitiesDataType.Count; j++)
                                 {
-                                    if (entitiesDataType[i].TypeField.ToString().ToUpper() == "INT")
-                                        result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + "SqlDbType.Int" + ", 4," + "p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
-                                    else
+                                    if (entities[i].Field.ToString() == entitiesDataType[j].NameField.ToString())
                                     {
-                                        if (entitiesDataType[i].TypeField.ToString().ToUpper() == "NCHAR")
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + " SqlDbType.NChar," + entitiesDataType[i].Length.ToString() + ",p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
-                                        else if (entitiesDataType[i].TypeField.ToString().ToLower() == "nvarchar")
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + " SqlDbType.NVarChar," + entitiesDataType[i].Length.ToString() + ",p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                        if (entitiesDataType[i].TypeField.ToString().ToUpper() == "INT")
+                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + "SqlDbType.Int" + ", 4," + "(object)p." + entities[i].Field + ")" + Environment.NewLine;
                                         else
-                                            result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field.ToString() + "\"" + ", " + " SqlDbType." + entitiesDataType[i].TypeField.ToString() + "," + entitiesDataType[i].Length.ToString() + ",p." + entities[i].Field.ToString() + ")" + Environment.NewLine;
+                                        {
+                                            if (entitiesDataType[i].TypeField.ToString().ToUpper() == "NCHAR")
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + " SqlDbType.NChar," + entitiesDataType[i].Length + ",(object)p." + entities[i].Field + ")" + Environment.NewLine;
+                                            else if (entitiesDataType[i].TypeField.ToString().ToLower() == "nvarchar")
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + " SqlDbType.NVarChar," + entitiesDataType[i].Length + ",(object)p." + entities[i].Field + ")" + Environment.NewLine;
+                                            else
+                                                result += "\t\t        cn.MakeInParam(" + "\"" + "@" + entities[i].Field + "\"" + ", " + " SqlDbType." + entitiesDataType[i].TypeField + "," + entitiesDataType[i].Length + ",(object)p." + entities[i].Field + ")" + Environment.NewLine;
+                                        }
                                     }
+                                    else
+                                        break;
                                 }
-                                else
-                                    break;
+
+                                #endregion para
+
+                                result += "        \t\t};" + Environment.NewLine;
+                                result += "\t\t        try" + Environment.NewLine;
+                                result += "\t\t        {" + Environment.NewLine;
+                                result += "\t\t          cn.RunProc(" + "\"sp_" + tableName + "_Delete" + "\"" + ",prams);" + Environment.NewLine;
+                                result += "\t\t          return (int)prams[0].Value;" + Environment.NewLine;
+                                result += "\t\t        }" + Environment.NewLine;
+                                result += "\t\t        catch (Exception ex)" + Environment.NewLine;
+                                result += "\t\t        {" + Environment.NewLine;
+                                result += "\t\t         return 0;" + Environment.NewLine;
+                                result += "\t\t       }" + Environment.NewLine;
+                                result += "\t\t       finally" + Environment.NewLine;
+                                result += "\t\t       {" + Environment.NewLine;
+                                result += "\t\t          cn.Dispose();" + Environment.NewLine;
+                                result += "\t\t       }" + Environment.NewLine;
+                                result += "        }\t\t " + Environment.NewLine;
                             }
 
-                            #endregion para
+                            #endregion Delete
 
-                            result += "        \t\t};" + Environment.NewLine;
-                            result += "\t\t        cn.RunProc(" + "\"sp_" + tableName + "_Delete" + "\"" + ",prams);" + Environment.NewLine;
-                            result += "\t\t        cn.Dispose();" + Environment.NewLine;
-                            result += "\t\t        try" + Environment.NewLine;
-                            result += "\t\t        {" + Environment.NewLine;
-                            result += "\t\t          return (int)prams[0].Value;" + Environment.NewLine;
-                            result += "\t\t        }" + Environment.NewLine;
-                            result += "\t\t        catch (Exception)" + Environment.NewLine;
-                            result += "\t\t        {" + Environment.NewLine;
-                            result += "\t\t         return 1;" + Environment.NewLine;
-                            result += "\t\t       }" + Environment.NewLine;
-                            result += "\t\t}" + Environment.NewLine;
+                            #region Load All Field
+
+                            if (entitiesDataType.Count >= 1)
+                            {
+                                result += "\t\tpublic DataTable All_" + tableName + "()" + Environment.NewLine;
+                                result += "\t\t{" + Environment.NewLine;
+                                result += "\t\tDatabase cn = new Database();" + Environment.NewLine;
+                                result += "\t\t        try" + Environment.NewLine;
+                                result += "\t\t        {" + Environment.NewLine;
+                                result += "\t\t            DataTable dt=  cn.RunExecProc(" + "\"sp_" + tableName + "_All" + "\"" + ").Tables[0];" + Environment.NewLine;
+                                result += "\t\t            return dt;" + Environment.NewLine;
+                                result += "\t\t        }" + Environment.NewLine;
+                                result += "\t\t        catch (Exception ex)" + Environment.NewLine;
+                                result += "\t\t        {" + Environment.NewLine;
+                                result += "\t\t         return null;" + Environment.NewLine;
+                                result += "\t\t        }" + Environment.NewLine;
+                                result += "\t\t       finally" + Environment.NewLine;
+                                result += "\t\t       {" + Environment.NewLine;
+                                result += "\t\t        cn.Dispose();" + Environment.NewLine;
+                                result += "\t\t       }" + Environment.NewLine;
+                                result += "\t\t}" + Environment.NewLine;
+                            }
+
+                            #endregion Load All Field
+
+                            result += "\t}" + Environment.NewLine;
+                            result += "}" + Environment.NewLine;
                         }
-
-                        #endregion Delete
-
-                        #region Load All Field
-
-                        if (entitiesDataType.Count >= 1)
-                        {
-                            result += "\t\tpublic DataTable All_" + tableName + "()" + Environment.NewLine;
-                            result += "\t\t{" + Environment.NewLine;
-                            result += "\t\tDatabase cn = new Database();" + Environment.NewLine;
-                            result += "\t\t        DataTable dt=  cn.RunExecProc(" + "\"sp_" + tableName + "_All" + "\"" + ").Tables[0];" + Environment.NewLine;
-                            result += "\t\t        cn.Dispose();" + Environment.NewLine;
-                            result += "\t\t        return dt;" + Environment.NewLine;
-                            result += "\t\t}" + Environment.NewLine;
-                        }
-
-                        #endregion Load All Field
-
-                        result += "\t}" + Environment.NewLine;
-                        result += "}" + Environment.NewLine;
                     }
-
-                    #endregion Generation Class
                 }
             }
             return result;
@@ -1125,22 +1517,22 @@ namespace GenerationClass.Code
                                 }
                                 if (entities[i].Type.ToString() == "bit")
                                 {
-                                    result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + "," + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as " + entities[i].Type + "," + Environment.NewLine;
                                 }
                                 else if (GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() == "String")
                                 {
                                     if (entities[i].Length.ToString() == "-1")
-                                        result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (max)," + Environment.NewLine;
+                                        result += "@" + entities[i].Field + " as " + entities[i].Type + " (max)," + Environment.NewLine;
                                     else
-                                        result += "@" + entities[i].Field.ToString() + " as Nvarchar (max)," + Environment.NewLine;
+                                        result += "@" + entities[i].Field + " as Nvarchar (max)," + Environment.NewLine;
                                     //result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (" + entities[i].Length.ToString() + ")," + Environment.NewLine;
                                 }
                                 else
                                 {
                                     if (entities[i].Type.ToString() != "image" && entities[i].Type.ToString() != "real" && entities[i].Type.ToString() != "int" && entities[i].Type.ToString() != "datetime" && entities[i].Type.ToString() != "smalldatetime")
-                                        result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (" + entities[i].Length.ToString() + ")," + Environment.NewLine;
+                                        result += "@" + entities[i].Field + " as " + entities[i].Type + " (" + entities[i].Length + ")," + Environment.NewLine;
                                     else
-                                        result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + "," + Environment.NewLine;
+                                        result += "@" + entities[i].Field + " as " + entities[i].Type + "," + Environment.NewLine;
                                 }
                             }
                         }
@@ -1155,22 +1547,22 @@ namespace GenerationClass.Code
                                 }
                                 if (entities[i].Type.ToString() == "bit")
                                 {
-                                    result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + "";
+                                    result += "@" + entities[i].Field + " as " + entities[i].Type + "";
                                 }
                                 else if (GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() == "String")
                                 {
                                     if (entities[i].Length.ToString() == "-1")
-                                        result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (max)";
+                                        result += "@" + entities[i].Field + " as " + entities[i].Type + " (max)";
                                     else
                                         //result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (" + entities[i].Length.ToString() + ")";
-                                        result += "@" + entities[i].Field.ToString() + " as Nvarchar (max)," + Environment.NewLine;
+                                        result += "@" + entities[i].Field + " as Nvarchar (max)," + Environment.NewLine;
                                 }
                                 else
                                 {
                                     if (entities[i].Type.ToString() != "image" && entities[i].Type.ToString() != "real" && entities[i].Type.ToString() != "int" && entities[i].Type.ToString() != "datetime" && entities[i].Type.ToString() != "smalldatetime")
-                                        result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (" + entities[i].Length.ToString() + ")";
+                                        result += "@" + entities[i].Field + " as " + entities[i].Type + " (" + entities[i].Length + ")";
                                     else
-                                        result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + "";
+                                        result += "@" + entities[i].Field + " as " + entities[i].Type + "";
                                 }
                             }
                         }
@@ -1231,7 +1623,7 @@ namespace GenerationClass.Code
                                             break;
                                     }
                                     // else
-                                    result += entities[i].Field.ToString() + "," + Environment.NewLine;
+                                    result += entities[i].Field + "," + Environment.NewLine;
                                 }
                             }
                             for (int i = entities.Count - 1; i < entities.Count; i++)
@@ -1244,7 +1636,7 @@ namespace GenerationClass.Code
                                             break;
                                     }
                                     // else
-                                    result += entities[i].Field.ToString() + "" + Environment.NewLine;
+                                    result += entities[i].Field + "" + Environment.NewLine;
                                 }
                             }
                         }
@@ -1264,7 +1656,7 @@ namespace GenerationClass.Code
                                             break;
                                     }
                                     // else
-                                    result += "@" + entities[i].Field.ToString() + "," + Environment.NewLine;
+                                    result += "@" + entities[i].Field + "," + Environment.NewLine;
                                 }
                             }
                             for (int i = entities.Count - 1; i < entities.Count; i++)
@@ -1277,7 +1669,7 @@ namespace GenerationClass.Code
                                             break;
                                     }
                                     // else
-                                    result += "@" + entities[i].Field.ToString() + "" + Environment.NewLine;
+                                    result += "@" + entities[i].Field + "" + Environment.NewLine;
                                 }
                             }
                         }
@@ -1402,26 +1794,26 @@ namespace GenerationClass.Code
 
                             if (entities[i].Type.ToString() == "bit")
                             {
-                                result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + a + Environment.NewLine;
+                                result += "@" + entities[i].Field + " as " + entities[i].Type + a + Environment.NewLine;
                             }
                             else if (entities[i].Type.ToString() == "numeric")
                             {
-                                result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + a + Environment.NewLine;
+                                result += "@" + entities[i].Field + " as " + entities[i].Type + a + Environment.NewLine;
                             }
                             else if (GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() == "String")
                             {
                                 if (entities[i].Length.ToString() == "-1")
-                                    result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (max)" + a + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as " + entities[i].Type + " (max)" + a + Environment.NewLine;
                                 else
                                     // result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (" + entities[i].Length.ToString() + ")" + a + Environment.NewLine;
-                                    result += "@" + entities[i].Field.ToString() + " as Nvarchar (max)," + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as Nvarchar (max)," + Environment.NewLine;
                             }
                             else
                             {
                                 if (entities[i].Type.ToString() != "image" && entities[i].Type.ToString() != "real" && entities[i].Type.ToString() != "int" && entities[i].Type.ToString() != "datetime" && entities[i].Type.ToString() != "smalldatetime")
-                                    result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (" + entities[i].Length.ToString() + ")" + a + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as " + entities[i].Type + " (" + entities[i].Length + ")" + a + Environment.NewLine;
                                 else
-                                    result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + a + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as " + entities[i].Type + a + Environment.NewLine;
                             }
                         }
 
@@ -1445,11 +1837,11 @@ namespace GenerationClass.Code
                             //    {
                             if (i < entities.Count - 1)
                             {
-                                result += entities[i].Field.ToString() + " = " + "@" + entities[i].Field.ToString() + "," + Environment.NewLine;
+                                result += entities[i].Field + " = " + "@" + entities[i].Field + "," + Environment.NewLine;
                             }
                             else
                             {
-                                result += entities[i].Field.ToString() + " = " + "@" + entities[i].Field.ToString() + Environment.NewLine;
+                                result += entities[i].Field + " = " + "@" + entities[i].Field + Environment.NewLine;
                             }
                             //    }
                             //}
@@ -1459,11 +1851,11 @@ namespace GenerationClass.Code
                         {
                             if (i < 1)
                             {
-                                result += "where (@" + entitiesDataType[i].NameField.ToString() + " = " + tableName + "." + entitiesDataType[i].NameField.ToString() + " and " + Environment.NewLine;
+                                result += "where (@" + entitiesDataType[i].NameField + " = " + tableName + "." + entitiesDataType[i].NameField + " and " + Environment.NewLine;
                             }
                             else
                             {
-                                result += "@" + entitiesDataType[i].NameField.ToString() + " = " + tableName + "." + entitiesDataType[i].NameField.ToString() + "" + Environment.NewLine;
+                                result += "@" + entitiesDataType[i].NameField + " = " + tableName + "." + entitiesDataType[i].NameField + "" + Environment.NewLine;
                             }
                         }
 
@@ -1482,22 +1874,22 @@ namespace GenerationClass.Code
 
                             if (entities[i].Type.ToString() == "bit")
                             {
-                                result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + a + Environment.NewLine;
+                                result += "@" + entities[i].Field + " as " + entities[i].Type + a + Environment.NewLine;
                             }
                             else if (GetType(entities[i].Type.ToString()).Replace("System.", "").Trim() == "String")
                             {
                                 if (entities[i].Length.ToString() == "-1")
-                                    result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (max)" + a + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as " + entities[i].Type + " (max)" + a + Environment.NewLine;
                                 else
                                     // result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (" + entities[i].Length.ToString() + ")" + a + Environment.NewLine;
-                                    result += "@" + entities[i].Field.ToString() + " as Nvarchar (max)," + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as Nvarchar (max)," + Environment.NewLine;
                             }
                             else
                             {
                                 if (entities[i].Type.ToString() != "image" && entities[i].Type.ToString() != "real" && entities[i].Type.ToString() != "int" && entities[i].Type.ToString() != "datetime" && entities[i].Type.ToString() != "smalldatetime")
-                                    result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + " (" + entities[i].Length.ToString() + ")" + a + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as " + entities[i].Type + " (" + entities[i].Length + ")" + a + Environment.NewLine;
                                 else
-                                    result += "@" + entities[i].Field.ToString() + " as " + entities[i].Type.ToString() + a + Environment.NewLine;
+                                    result += "@" + entities[i].Field + " as " + entities[i].Type + a + Environment.NewLine;
                             }
                         }
 
@@ -1520,11 +1912,11 @@ namespace GenerationClass.Code
                                 {
                                     if (i < entities.Count - 1)
                                     {
-                                        result += entities[i].Field.ToString() + " = " + "@" + entities[i].Field.ToString() + "," + Environment.NewLine;
+                                        result += entities[i].Field + " = " + "@" + entities[i].Field + "," + Environment.NewLine;
                                     }
                                     else
                                     {
-                                        result += entities[i].Field.ToString() + " = " + "@" + entities[i].Field.ToString() + Environment.NewLine;
+                                        result += entities[i].Field + " = " + "@" + entities[i].Field + Environment.NewLine;
                                     }
                                 }
                             }
@@ -1532,7 +1924,7 @@ namespace GenerationClass.Code
 
                         foreach (var entityType in entitiesDataType)
                         {
-                            result += "where " + tableName + "." + entityType.NameField.ToString() + " =  @" + entityType.NameField.ToString() + Environment.NewLine;
+                            result += "where " + tableName + "." + entityType.NameField + " =  @" + entityType.NameField + Environment.NewLine;
                         }
 
                         result += Environment.NewLine;
@@ -1566,14 +1958,14 @@ namespace GenerationClass.Code
                     {
                         string a = (k == entitiesDataType.Count - 1) ? "" : ",";
                         if (entityType.TypeField.ToString() != "image" && entityType.TypeField.ToString() != "real" && entityType.TypeField.ToString() != "int" && entityType.TypeField.ToString() != "datetime" && entityType.TypeField.ToString() != "smalldatetime")
-                            result += "@" + entityType.NameField.ToString() + " as " + entityType.TypeField.ToString() + " (" + entityType.Length.ToString() + ")" + a + Environment.NewLine;
+                            result += "@" + entityType.NameField + " as " + entityType.TypeField + " (" + entityType.Length + ")" + a + Environment.NewLine;
                         else
-                            result += "@" + entityType.NameField.ToString() + " as " + entityType.TypeField.ToString() + a + Environment.NewLine;
+                            result += "@" + entityType.NameField + " as " + entityType.TypeField + a + Environment.NewLine;
                         //result += "@ID_Output int output" + Environment.NewLine;
                         result += " as" + Environment.NewLine;
                         //  result += " set @ID_Output = " + "@"+entityType.NameField.ToString() + Environment.NewLine;
                         result += "delete " + tableName + Environment.NewLine;
-                        result += "where (" + tableName + "." + entityType.NameField.ToString() + "=" + "@" + entityType.NameField.ToString() + ")" + Environment.NewLine;
+                        result += "where (" + tableName + "." + entityType.NameField + "=" + "@" + entityType.NameField + ")" + Environment.NewLine;
                         k++;
                     }
                     // }

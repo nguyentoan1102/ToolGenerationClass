@@ -20,7 +20,7 @@
             set;
         }
 
-        public object IsNullAble { get; set; }
+        public object AllowNull { get; set; }
     }
 
     public class GetType

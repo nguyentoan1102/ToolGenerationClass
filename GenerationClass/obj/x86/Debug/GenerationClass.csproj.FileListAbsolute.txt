@@ -100,7 +100,6 @@ D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\bin\D
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.Dmf.Common.dll
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.Diagnostics.STrace.dll
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.ServiceBrokerEnum.dll
-D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.csprojResolveAssemblyReference.cache
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.ChangeColumnTable.resources
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.ConnectData.resources
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.Generation.resources

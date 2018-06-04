@@ -230,7 +230,7 @@ namespace GenerationClass.Code
                             Field = myReader.GetValue(0),
                             Type = myReader.GetValue(1),
                             Length = myReader.GetValue(2),
-                            IsNullAble = myReader.GetValue(3)
+                            AllowNull = myReader.GetValue(3)
                         };
 
                         entityList.Add(entity);

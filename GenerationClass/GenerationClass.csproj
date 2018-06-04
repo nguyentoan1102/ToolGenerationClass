@@ -86,7 +86,6 @@
     <Compile Include="Code\ClassCodeService.cs" />
     <Compile Include="Code\ClassHelperMethod.cs" />
     <Compile Include="Code\ClassSeviceAPI.cs" />
-    <Compile Include="Code\ClassStoreProceduce.cs" />
     <Compile Include="Code\ConnectionData.cs" />
     <Compile Include="Code\DataRetrieve.cs" />
     <Compile Include="Code\DBInstance.cs" />
