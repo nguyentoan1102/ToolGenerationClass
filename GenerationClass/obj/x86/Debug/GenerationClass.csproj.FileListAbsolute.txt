@@ -112,3 +112,25 @@ D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\obj\x
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.csproj.CopyComplete
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.exe
 D:\Quản Lý Công Việc\GenerationClass\GenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.pdb
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\GenerationClass.exe
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\GenerationClass.pdb
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.ConnectionInfo.dll
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.Management.Sdk.Sfc.dll
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.Smo.dll
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.SqlEnum.dll
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\MySql.Data.dll
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.Dmf.dll
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\bin\Debug\Microsoft.SqlServer.ServiceBrokerEnum.dll
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.csprojResolveAssemblyReference.cache
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.ChangeColumnTable.resources
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.ConnectData.resources
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.Generation.resources
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.ListTableEdit.resources
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.Process.resources
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.Properties.Resources.resources
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.Resource1.resources
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.csproj.GenerateResource.cache
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.csproj.CoreCompileInputs.cache
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.csproj.CopyComplete
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.exe
+D:\ToanFile\Tool\ToolGenerationClass\GenerationClass\obj\x86\Debug\GenerationClass.pdb
